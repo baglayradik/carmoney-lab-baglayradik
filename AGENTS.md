@@ -23,6 +23,9 @@ curl http://localhost:8080/health
 - `kilo.jsonc` — конфиг Kilo Code (сейчас только `model`; блоки `permission` и `mcp` дописываются отдельно); `.kilo/agents/` — свои агенты
 - `.githooks/`, `scripts/`, `mocks/` — git-хуки, служебные скрипты, моки внешних сервисов
 
+## Поиск по коду
+Поиск по коду — через ast-index (`search`, `class`, `symbol`, `usages`, `callers`), а не чтением файлов целиком.
+
 ## Конвенции кода
 - `declare(strict_types=1)` в каждом PHP-файле, классы `final`, свойства через конструктор
 - Namespace `CarMoneyLab\`, PSR-4 от `backend/src/`
