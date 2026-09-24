@@ -31,6 +31,39 @@ Docker'а на ноутбуке нет? Тогда локально работа
 | `make seed` | перезалить учебные данные |
 | `make help` | список всех команд |
 
+## Как проверить, что сервис жив
+
+После `make up` подождите несколько секунд (backend стартует только когда healthcheck БД
+станет `healthy`) и выполните любое из:
+
+```bash
+# 1. Статус контейнеров — у обоих должно быть State: running, у db — healthy
+make ps
+# или то же самое напрямую:
+docker compose ps
+
+# 2. Health-эндпоинт сервиса — ожидаем HTTP 200
+curl -i http://localhost:${APP_PORT:-8080}/health
+
+# 3. Логи backend, если что-то не отвечает
+make logs
+```
+
+Порт снаружи задаётся переменной `APP_PORT` (по умолчанию `8080`), БД слушает на
+`${DB_PORT:-3307}:3306` — если на стенде вам выдали другой диапазон, подставьте его и в
+URL health, и в команду `make ps`.
+
+Дополнительно, что сервис реально считает заявки (а не только отвечает `/health`):
+
+```bash
+curl -X POST http://localhost:${APP_PORT:-8080}/api/ltv \
+  -H 'Content-Type: application/json' \
+  -d '{"vin":"XTA21099998765432","year":2019,"mileage":84000,
+       "market_value":900000,"requested_amount":450000,"term_months":24}'
+```
+
+В ответе должен прийти `status: approve | review | reject` и рассчитанный `ltv`.
+
 ## API
 
 | Метод | Путь | Зачем |
