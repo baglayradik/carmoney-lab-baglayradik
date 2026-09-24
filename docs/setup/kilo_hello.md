@@ -6,4 +6,4 @@
 2) В Makefile: `up`, `down`, `ps`, `logs`, `install`, `test` (PHPUnit), `lint` (php -l по `backend/` и `tests/`), `seed`, `help`; отдельных команд запуска и проверки в docker-compose.yml не нашёл — только описания сервисов `backend` (php -S 0.0.0.0:8080) и `db` (mysql:8.0) с healthcheck.
 3) Решение `approve` / `review` / `reject` считается в папке `backend/src/Domain/` (класс `DecisionEngine.php`).
 
-модель: stg-proxy/training-2026-09-minimax-m3
+модель: MiniMax M3
